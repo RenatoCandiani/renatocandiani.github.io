@@ -26,12 +26,15 @@
   .acoes { display: flex; flex-wrap: wrap; gap: 8px; }
   button { font: inherit; font-weight: 600; min-height: 48px; padding: 10px 18px; border-radius: 12px; border: 2px solid transparent; cursor: pointer; }
   button:focus-visible, [tabindex="-1"]:focus-visible { outline: 3px solid var(--ambar); outline-offset: 3px; }
+  button:disabled { cursor: not-allowed; opacity: .55; }
   .btn-claro { background: #fff; color: var(--azul-escuro); }
   .btn-contorno { background: transparent; color: #fff; border-color: #fff; }
   main { display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-start; gap: 32px; padding: 24px; }
+  main > section { min-width: 0; } /* no celular, celular e painel encolhem ate caber na tela */
   .rotulo { text-align: center; font-weight: 700; margin: 0 0 8px; color: var(--suave); text-transform: uppercase; letter-spacing: .05em; font-size: .85rem; }
-  .celular { width: 340px; min-height: 620px; background: #fff; border: 12px solid #111; border-radius: 36px; padding: 20px 18px; box-shadow: 0 10px 30px rgba(0,0,0,.25); }
+  .celular { width: 340px; max-width: 100%; min-height: 620px; background: #fff; border: 12px solid #111; border-radius: 36px; padding: 20px 18px; box-shadow: 0 10px 30px rgba(0,0,0,.25); }
   .app-topo { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 10px; }
+  @media (max-width: 359px) { .app-topo { flex-wrap: wrap; } } /* celular bem estreito: o botao de voz desce para a linha de baixo */
   .app-titulo { font-size: 1.15rem; font-weight: 700; color: var(--azul-escuro); margin: 0; }
   .btn-voz { padding: 6px 12px; font-size: .9rem; border-color: var(--azul); background: #dbeafe; color: var(--azul-escuro); white-space: nowrap; }
   .btn-voz[aria-pressed="false"] { background: #fff; color: var(--suave); border-color: #6b7280; }
@@ -68,8 +71,15 @@
   .distancia { background: #f3f4f6; border-radius: 12px; padding: 12px; text-align: center; font-size: 1.1rem; margin-top: 12px; }
   .chegando { background: #fef3c7; color: #78350f; border-radius: 12px; padding: 10px 12px; text-align: center; font-weight: 700; margin: 12px 0 0; }
   .viu { color: var(--verde); font-weight: 700; margin-top: 12px; text-align: center; }
+  .tipo-onibus { width: 560px; max-width: 100%; display: flex; flex-wrap: wrap; align-items: center; gap: 8px; background: #fff; border-radius: 14px; padding: 10px 14px; box-shadow: 0 2px 8px rgba(0,0,0,.08); }
+  .tipo-onibus .pergunta { font-weight: 700; margin-right: auto; }
+  .btn-tipo { padding: 8px 14px; background: #fff; color: var(--texto); border-color: #6b7280; }
+  .btn-tipo[aria-pressed="true"] { background: var(--azul); color: #fff; border-color: var(--azul); }
+  .explica-tipo { width: 560px; max-width: 100%; margin: 8px 0 12px; color: var(--suave); }
+  .explica-tipo span { display: block; }
+  .explica-tipo #dicaTrocar { font-weight: 600; margin-top: 2px; }
   .painel { width: 560px; max-width: 100%; background: var(--painel); color: #f9fafb; border-radius: 20px; padding: 20px 24px; box-shadow: 0 10px 30px rgba(0,0,0,.35); }
-  .abas { display: flex; gap: 6px; padding-bottom: 12px; margin-bottom: 14px; border-bottom: 1px solid #374151; }
+  .abas { display: flex; flex-wrap: wrap; gap: 6px; padding-bottom: 12px; margin-bottom: 14px; border-bottom: 1px solid #374151; }
   .aba { padding: 6px 12px; border-radius: 8px; color: #9ca3af; font-weight: 600; font-size: .9rem; }
   .aba.ativa { background: var(--azul); color: #fff; }
   .painel h2 { margin: 0; font-size: 1.3rem; }
@@ -89,6 +99,7 @@
   .aviso-ok { background: var(--verde); color: #fff; }
   .aviso h3 { margin: 0 0 6px; font-size: 1.5rem; }
   .aviso p { margin: 4px 0; font-size: 1.15rem; }
+  .aviso .falado { margin: 12px 0 0; font-weight: 700; }
   .precisa { list-style: none; padding: 0; margin: 10px 0; }
   .precisa li { font-size: 1.15rem; font-weight: 700; margin: 6px 0; }
   .btn-escuro { background: #111827; color: #fff; margin-top: 12px; }
@@ -107,7 +118,7 @@
 <header>
   <div>
     <h1>Embarque Priorit&aacute;rio <small>demonstra&ccedil;&atilde;o</small></h1>
-    <p>&Agrave; esquerda, o celular de quem espera no ponto. &Agrave; direita, a tela do motorista.</p>
+    <p>&Agrave; esquerda, o celular de quem espera no ponto. &Agrave; direita, a tela do &ocirc;nibus.</p>
   </div>
   <div class="acoes">
     <button type="button" class="btn-claro" id="btnVer"><span aria-hidden="true">&#9654;</span> Ver funcionando</button>
@@ -156,7 +167,7 @@
           <button type="button" class="opcao" data-ajuda="linha" aria-pressed="false"><span class="icone" aria-hidden="true">&#x1F442;</span> Ouvir o n&uacute;mero da linha <span class="marca" aria-hidden="true">&#x2714;</span></button>
           <button type="button" class="opcao" data-ajuda="rampa" aria-pressed="false"><span class="icone" aria-hidden="true">&#x267F;</span> Rampa ou elevador <span class="marca" aria-hidden="true">&#x2714;</span></button>
         </div>
-        <button type="button" class="btn-principal" id="btnAvisar">Avisar o motorista</button>
+        <button type="button" class="btn-principal" id="btnAvisar">Avisar que estou no ponto</button>
         <p class="quem">Para todos com prioridade por lei: idosos, gestantes, pessoas com defici&ecirc;ncia, autistas, quem est&aacute; com crian&ccedil;a de colo e outros.</p>
       </div>
 
@@ -164,11 +175,11 @@
         <p class="grande" aria-hidden="true">&#x2705;</p>
         <div class="msg">
           <p class="destaque">Aviso enviado.</p>
-          <p>O motorista da <span class="nomeLinha">linha</span> vai saber que voc&ecirc; est&aacute; aqui.</p>
+          <p>O pr&oacute;ximo &ocirc;nibus da <span class="nomeLinha">linha</span> vai receber seu aviso.</p>
         </div>
         <div class="distancia">&Ocirc;nibus a <strong id="distCelular">1 km</strong></div>
         <p class="chegando" id="chegando" hidden><span aria-hidden="true">&#x1F514;</span> <span class="msg">Seu &ocirc;nibus est&aacute; chegando.</span></p>
-        <p class="viu" id="motoristaViu" hidden><span aria-hidden="true">&#x2714;</span> <span class="msg">O motorista viu seu aviso.</span></p>
+        <p class="viu" id="equipeViu" hidden><span aria-hidden="true">&#x2714;</span> <span class="msg"><span class="so-motorista">O motorista recebeu o aviso em voz alta.</span><span class="so-cobrador" hidden>O cobrador viu seu aviso. Ele vai te ajudar a embarcar.</span></span></p>
         <button type="button" class="btn-cancelar" id="btnCancelar">Cancelar aviso</button>
       </div>
 
@@ -177,7 +188,7 @@
         <div class="msg">
           <p class="destaque">Seu &ocirc;nibus chegou.</p>
           <p>&Eacute; a <span class="nomeLinha">linha</span>. Pode subir primeiro.</p>
-          <p id="dicaLinha" hidden>O motorista vai falar a linha em voz alta.</p>
+          <p id="dicaLinha" hidden>O <span class="quemAtende">motorista</span> vai falar a linha em voz alta.</p>
         </div>
       </div>
 
@@ -202,6 +213,16 @@
 
   <section aria-labelledby="rotuloPainel">
     <p class="rotulo" id="rotuloPainel">Tela do motorista</p>
+    <div class="tipo-onibus" role="group" aria-labelledby="perguntaCobrador">
+      <span class="pergunta" id="perguntaCobrador">Este &ocirc;nibus tem cobrador?</span>
+      <button type="button" class="btn-tipo" data-modo="motorista" aria-pressed="true">Sem cobrador</button>
+      <button type="button" class="btn-tipo" data-modo="cobrador" aria-pressed="false">Com cobrador</button>
+    </div>
+    <p class="explica-tipo">
+      <span class="so-motorista">Sem cobrador: o motorista ouve o aviso em voz alta e n&atilde;o tira o olho da rua.</span>
+      <span class="so-cobrador" hidden>Com cobrador: o aviso vai para o cobrador, que avisa o motorista e ajuda no embarque.</span>
+      <span id="dicaTrocar" hidden>Para trocar, clique em Recome&ccedil;ar.</span>
+    </p>
     <div class="painel">
       <div class="abas" aria-hidden="true">
         <span class="aba">Viagem</span>
@@ -224,18 +245,22 @@
         <div class="msg">
           <h3>ATEN&Ccedil;&Atilde;O</h3>
           <p><strong>1 pessoa com prioridade</strong> no pr&oacute;ximo ponto.</p>
-          <ul class="precisa listaPrecisa" hidden></ul>
-          <p>Deixe embarcar primeiro.</p>
+          <ul class="precisa" id="listaAlerta" hidden></ul>
+          <p class="so-motorista">Deixe embarcar primeiro.</p>
+          <p class="so-cobrador" hidden>Ajude a pessoa a embarcar primeiro.</p>
         </div>
-        <button type="button" class="btn-escuro" id="btnCiente">Ciente</button>
-        <p id="textoCiente" hidden>Voc&ecirc; confirmou que viu o aviso.</p>
+        <p class="so-motorista falado"><span aria-hidden="true">&#x1F50A;</span> Aviso falado em voz alta. N&atilde;o precisa tocar na tela.</p>
+        <div class="so-cobrador" hidden>
+          <button type="button" class="btn-escuro" id="btnCiente">Ciente</button>
+          <p id="textoCiente" hidden>Voc&ecirc; confirmou que viu o aviso.</p>
+        </div>
       </div>
 
       <div id="avisoNoPonto" class="aviso aviso-alerta" hidden>
         <div class="msg">
-          <h3>Voc&ecirc; chegou ao ponto.</h3>
+          <h3><span class="so-motorista">Voc&ecirc; chegou ao ponto.</span><span class="so-cobrador" hidden>Chegamos ao ponto.</span></h3>
           <p><strong>1 pessoa com prioridade</strong> esperando para embarcar.</p>
-          <ul class="precisa listaPrecisa" hidden></ul>
+          <ul class="precisa" id="listaNoPonto" hidden></ul>
         </div>
         <button type="button" class="btn-escuro" id="btnEmbarcou"><span aria-hidden="true">&#x2714;</span> Embarcou</button>
       </div>
@@ -268,8 +293,9 @@
   // Ajustes da simulacao (tudo acelerado para caber numa demonstracao)
   var DISTANCIA_INICIAL = 1000; // metros entre o onibus e o ponto no inicio
   var DISTANCIA_ALERTA = 500;   // o aviso aparece a partir daqui
-  var PASSO = 20;               // metros andados a cada tique
-  var TIQUE_MS = 250;           // 20 m a cada 250 ms
+  var PASSO = 20;               // metros por tique quando o onibus esta longe
+  var PASSO_MINIMO = 6;         // perto do ponto ele vai freando ate este passo
+  var TIQUE_MS = 250;           // um tique a cada 250 ms
 
   // Linhas de exemplo do ponto mais perto da pessoa.
   // "palavras" e o que o assistente reconhece quando ela escreve para onde vai.
@@ -299,22 +325,40 @@
   // (fim da busca de linhas)
 
   // O app nao pergunta "quem e voce": pergunta "o que te ajuda a embarcar".
-  // Cada ajuda vira uma instrucao pratica na tela do motorista.
+  // Cada ajuda vira uma instrucao pratica para quem atende no onibus.
   var AJUDAS = {
-    tempo: { nome: 'Mais tempo para subir', icone: '\u23F3', motorista: 'D\u00EA mais tempo para subir e sentar.' },
-    linha: { nome: 'Ouvir o n\u00FAmero da linha', icone: '\u{1F5E3}\uFE0F', motorista: 'Fale a linha em voz alta.' },
-    rampa: { nome: 'Rampa ou elevador', icone: '\u267F', motorista: 'Prepare a rampa ou o elevador.' }
+    tempo: {
+      nome: 'Mais tempo para subir', icone: '\u23F3',
+      motorista: 'D\u00EA mais tempo para subir e sentar.',
+      cobrador: 'Pe\u00E7a ao motorista para esperar a pessoa sentar.'
+    },
+    linha: {
+      nome: 'Ouvir o n\u00FAmero da linha', icone: '\u{1F5E3}\uFE0F',
+      motorista: 'Fale a linha em voz alta.',
+      cobrador: 'Fale a linha em voz alta.'
+    },
+    rampa: {
+      nome: 'Rampa ou elevador', icone: '\u267F',
+      motorista: 'Prepare a rampa ou o elevador.',
+      cobrador: 'Prepare a rampa ou o elevador.'
+    }
   };
   var ORDEM_AJUDAS = ['tempo', 'linha', 'rampa'];
 
   var TELAS_CELULAR = ['telaLinha', 'telaEscolha', 'telaAguardando', 'telaChegou', 'telaEmbarcou', 'telaCancelado'];
   var AVISOS_PAINEL = ['avisoNada', 'avisoAlerta', 'avisoNoPonto', 'avisoEmbarcou', 'avisoCancelado'];
 
+  // Regra do cobrador:
+  // com cobrador, o aviso vai para ele, que avisa o motorista e ajuda no embarque;
+  // sem cobrador, o motorista ouve o aviso em voz alta e nao tira o olho da rua.
+  var modoOnibus = 'motorista';
+
   var estado = null;
   var agendados = [];
   var audioCtx = null;
   var vozLigada = true;
-  var vozPortugues = null;
+  var vozCelular = null;
+  var vozPainel = null;
 
   function $(id) { return document.getElementById(id); }
 
@@ -357,29 +401,65 @@
 
   function anunciar(regiaoId, blocoId) { anunciarTexto(regiaoId, textoDoBloco(blocoId)); }
 
-  // Voz do celular: quem nao enxerga ouve cada passo
-  function escolherVoz() {
+  function agendar(fn, ms) { agendados.push(setTimeout(fn, ms)); }
+
+  // Vozes: uma para o celular e outra para o onibus, para nao confundir quem fala
+  function escolherVozes() {
     try {
       var vozes = window.speechSynthesis.getVoices();
       var brasil = vozes.filter(function (v) { return /^pt[-_]BR/i.test(v.lang); });
       if (!brasil.length) brasil = vozes.filter(function (v) { return /^pt/i.test(v.lang); });
       var locais = brasil.filter(function (v) { return v.localService; });
-      vozPortugues = locais[0] || brasil[0] || null;
+      var ordem = locais.concat(brasil.filter(function (v) { return !v.localService; }));
+      vozCelular = ordem[0] || null;
+      vozPainel = ordem.filter(function (v) { return v !== vozCelular; })[0] || vozCelular;
     } catch (e) {
-      vozPortugues = null;
+      vozCelular = null;
+      vozPainel = null;
     }
   }
 
-  function falar(texto) {
-    if (!vozLigada || !texto || !('speechSynthesis' in window)) return;
+  function temVoz() {
+    try { return window.speechSynthesis.getVoices().length > 0; } catch (e) { return false; }
+  }
+
+  // Fala um texto. aoTerminar (opcional) roda uma vez so, quando a fala acaba.
+  function falarCom(texto, voz, tom, aoTerminar) {
+    var terminou = false;
+    function fim() {
+      if (terminou) return;
+      terminou = true;
+      if (aoTerminar) aoTerminar();
+    }
+    if (!texto) return;
+    if (!('speechSynthesis' in window)) {
+      if (aoTerminar) agendar(fim, 2500);
+      return;
+    }
     try {
       var fala = new SpeechSynthesisUtterance(texto);
       fala.lang = 'pt-BR';
-      if (vozPortugues) fala.voice = vozPortugues;
+      if (voz) fala.voice = voz;
+      if (tom) fala.pitch = tom;
+      fala.onend = fim;
+      fala.onerror = fim;
       window.speechSynthesis.speak(fala);
+      // Se o navegador nao avisar que a fala acabou, segue mesmo assim
+      if (aoTerminar) agendar(fim, temVoz() ? 10000 : 2500);
     } catch (e) {
-      // navegador sem voz: segue so com a tela
+      if (aoTerminar) agendar(fim, 2500);
     }
+  }
+
+  // Voz do celular (o passageiro pode desligar)
+  function falar(texto) {
+    if (vozLigada) falarCom(texto, vozCelular, null, null);
+  }
+
+  // Voz do onibus: outra voz; se so existir uma, fica mais grave
+  function falarNoPainel(texto, aoTerminar) {
+    var tom = (vozPainel && vozPainel !== vozCelular) ? null : 0.8;
+    falarCom(texto, vozPainel, tom, aoTerminar);
   }
 
   function calar() {
@@ -401,8 +481,6 @@
     $('estadoVoz').textContent = vozLigada ? 'ligada' : 'desligada';
     if (vozLigada) falar('Voz ligada.'); else calar();
   }
-
-  function agendar(fn, ms) { agendados.push(setTimeout(fn, ms)); }
 
   function pararTudo() {
     agendados.forEach(clearTimeout);
@@ -432,23 +510,66 @@
     return ORDEM_AJUDAS.filter(function (chave) { return estado.ajudas[chave]; });
   }
 
-  // Monta na tela do motorista o que ele precisa fazer
-  function montarInstrucoes() {
-    var escolhidas = ajudasEscolhidas();
-    cada('.listaPrecisa', function (lista) {
-      lista.innerHTML = '';
-      escolhidas.forEach(function (chave) {
-        var item = document.createElement('li');
-        var icone = document.createElement('span');
-        icone.setAttribute('aria-hidden', 'true');
-        icone.textContent = AJUDAS[chave].icone + ' ';
-        item.appendChild(icone);
-        item.appendChild(document.createTextNode(AJUDAS[chave].motorista));
-        lista.appendChild(item);
-      });
-      lista.hidden = (escolhidas.length === 0);
+  // Mostra so o que vale para o tipo de onibus escolhido
+  function aplicarModo() {
+    var comCobrador = (modoOnibus === 'cobrador');
+    cada('.so-motorista', function (el) { el.hidden = comCobrador; });
+    cada('.so-cobrador', function (el) { el.hidden = !comCobrador; });
+    cada('.btn-tipo', function (b) {
+      b.setAttribute('aria-pressed', b.getAttribute('data-modo') === modoOnibus ? 'true' : 'false');
     });
+    cada('.quemAtende', function (el) { el.textContent = comCobrador ? 'cobrador' : 'motorista'; });
+    $('rotuloPainel').textContent = comCobrador ? 'Tela do cobrador' : 'Tela do motorista';
+  }
+
+  // Durante a viagem nao da para trocar o tipo de onibus
+  function travarTipo(travado) {
+    cada('.btn-tipo', function (b) { b.disabled = travado; });
+    $('dicaTrocar').hidden = !travado;
+  }
+
+  function escolherModo(modo) {
+    if (modo !== 'motorista' && modo !== 'cobrador') return;
+    if (estado.fase !== 'linha' && estado.fase !== 'escolha') return;
+    modoOnibus = modo;
+    aplicarModo();
+  }
+
+  function preencherLista(lista, itens) {
+    lista.innerHTML = '';
+    itens.forEach(function (item) {
+      var li = document.createElement('li');
+      var icone = document.createElement('span');
+      icone.setAttribute('aria-hidden', 'true');
+      icone.textContent = item.icone + ' ';
+      li.appendChild(icone);
+      li.appendChild(document.createTextNode(item.texto));
+      lista.appendChild(li);
+    });
+    lista.hidden = (itens.length === 0);
+  }
+
+  // Monta o que quem atende no onibus precisa fazer
+  function montarInstrucoes() {
+    var comCobrador = (modoOnibus === 'cobrador');
+    var ajudas = ajudasEscolhidas().map(function (chave) {
+      return { icone: AJUDAS[chave].icone, texto: comCobrador ? AJUDAS[chave].cobrador : AJUDAS[chave].motorista };
+    });
+    // O cobrador e o intermediario: primeiro ele avisa o motorista para parar
+    var noAlerta = comCobrador
+      ? [{ icone: '\u{1F68F}', texto: 'Avise o motorista para parar no ponto.' }].concat(ajudas)
+      : ajudas;
+    preencherLista($('listaAlerta'), noAlerta);
+    preencherLista($('listaNoPonto'), ajudas);
     $('dicaLinha').hidden = !estado.ajudas.linha;
+  }
+
+  // O que o motorista ouve quando nao tem cobrador
+  function textoAlertaFalado() {
+    var partes = ['Aten\u00E7\u00E3o. Uma pessoa com prioridade no pr\u00F3ximo ponto.'];
+    ajudasEscolhidas().forEach(function (chave) { partes.push(AJUDAS[chave].motorista); });
+    partes.push('Deixe embarcar primeiro.');
+    return partes.join(' ');
   }
 
   function recomecar() {
@@ -473,11 +594,13 @@
     $('linhaPainel').textContent = '\u00D4nibus da linha escolhida';
     cada('.opcao', function (b) { b.setAttribute('aria-pressed', 'false'); });
     $('chegando').hidden = true;
-    $('motoristaViu').hidden = true;
+    $('equipeViu').hidden = true;
     $('dicaLinha').hidden = true;
     $('btnCiente').hidden = false;
     $('textoCiente').hidden = true;
     $('avisoAlerta').classList.remove('piscando');
+    aplicarModo();
+    travarTipo(false);
     mostrar(TELAS_CELULAR, 'telaLinha');
     mostrar(AVISOS_PAINEL, 'avisoNada');
     atualizarDistancia();
@@ -546,6 +669,7 @@
   function avisarPresenca() {
     if (estado.fase !== 'escolha' || !estado.linha) return;
     montarInstrucoes();
+    travarTipo(true);
     estado.fase = 'aguardando';
     mostrar(TELAS_CELULAR, 'telaAguardando');
     avisarNoCelular('telaAguardando');
@@ -553,40 +677,61 @@
   }
 
   function andar() {
-    estado.distancia = Math.max(0, estado.distancia - PASSO);
+    // Longe do ponto o onibus anda rapido; perto, vai freando
+    var passo = Math.max(PASSO_MINIMO, Math.min(PASSO, estado.distancia / 25));
+    estado.distancia = Math.max(0, estado.distancia - passo);
     atualizarDistancia();
     if (estado.fase === 'aguardando' && estado.distancia <= DISTANCIA_ALERTA) dispararAlerta();
     if (estado.distancia === 0) chegarNoPonto();
   }
 
   function dispararAlerta() {
+    var vez = estado;
     estado.fase = 'alertado';
     mostrar(AVISOS_PAINEL, 'avisoAlerta');
     $('avisoAlerta').classList.add('piscando');
     anunciar('anuncioPainel', 'avisoAlerta');
     bipar();
-    var repeticoes = 1;
-    estado.bipes = setInterval(function () {
-      if (repeticoes >= 4) { clearInterval(estado.bipes); estado.bipes = null; return; }
-      repeticoes++;
-      bipar();
-    }, 3000);
+    if (modoOnibus === 'cobrador') {
+      // Com cobrador: o bipe repete ate ele tocar em "Ciente"
+      var repeticoes = 1;
+      estado.bipes = setInterval(function () {
+        if (repeticoes >= 4) { clearInterval(vez.bipes); vez.bipes = null; return; }
+        repeticoes++;
+        bipar();
+      }, 3000);
+      if (estado.auto) agendar(confirmarCiente, 2800);
+    } else {
+      // Sem cobrador: depois do bipe, o aviso e falado para o motorista
+      agendar(function () {
+        falarNoPainel(textoAlertaFalado(), function () {
+          if (vez === estado && estado.fase === 'alertado') avisoFalado();
+        });
+      }, 900);
+    }
     // O celular tambem avisa, logo depois do bipe
     $('chegando').hidden = false;
     agendar(function () { avisarNoCelular('chegando'); }, 1200);
-    if (estado.auto) agendar(confirmarCiente, 2800);
   }
 
+  // Sem cobrador: o aviso ja foi falado, entao o celular confirma
+  function avisoFalado() {
+    $('avisoAlerta').classList.remove('piscando');
+    $('equipeViu').hidden = false;
+    avisarNoCelular('equipeViu');
+  }
+
+  // Com cobrador: ele toca em "Ciente" e o celular confirma
   function confirmarCiente() {
-    if (estado.fase !== 'alertado' || estado.ciente) return;
+    if (modoOnibus !== 'cobrador' || estado.fase !== 'alertado' || estado.ciente) return;
     estado.ciente = true;
     clearInterval(estado.bipes);
     estado.bipes = null;
     $('avisoAlerta').classList.remove('piscando');
     $('btnCiente').hidden = true;
     $('textoCiente').hidden = false;
-    $('motoristaViu').hidden = false;
-    avisarNoCelular('motoristaViu');
+    $('equipeViu').hidden = false;
+    avisarNoCelular('equipeViu');
   }
 
   function chegarNoPonto() {
@@ -614,6 +759,7 @@
 
   function cancelarAviso() {
     if (estado.fase !== 'aguardando' && estado.fase !== 'alertado') return;
+    var jaTinhaAviso = (estado.fase === 'alertado');
     pararTudo();
     calar();
     estado.fase = 'cancelado';
@@ -622,6 +768,8 @@
     mostrar(TELAS_CELULAR, 'telaCancelado');
     mostrar(AVISOS_PAINEL, 'avisoCancelado');
     anunciar('anuncioPainel', 'avisoCancelado');
+    // Sem cobrador: o motorista ja tinha ouvido o aviso, entao ouve o cancelamento
+    if (jaTinhaAviso && modoOnibus === 'motorista') falarNoPainel('Aviso de prioridade cancelado.', null);
     avisarNoCelular('telaCancelado');
   }
 
@@ -692,6 +840,9 @@
   cada('.opcao', function (b) {
     b.addEventListener('click', function () { alternarAjuda(b.getAttribute('data-ajuda')); });
   });
+  cada('.btn-tipo', function (b) {
+    b.addEventListener('click', function () { escolherModo(b.getAttribute('data-modo')); });
+  });
   $('btnAvisar').addEventListener('click', function () { avisarPresenca(); focar('telaAguardando'); });
   $('btnCancelar').addEventListener('click', function () { cancelarAviso(); focar('telaCancelado'); });
   $('btnAvisarDeNovo').addEventListener('click', function () { recomecar(); focar('telaLinha'); });
@@ -703,16 +854,19 @@
   document.addEventListener('click', prepararSom, true);
 
   if ('speechSynthesis' in window) {
-    escolherVoz();
+    escolherVozes();
     if (window.speechSynthesis.addEventListener) {
-      window.speechSynthesis.addEventListener('voiceschanged', escolherVoz);
+      window.speechSynthesis.addEventListener('voiceschanged', escolherVozes);
     } else {
-      window.speechSynthesis.onvoiceschanged = escolherVoz;
+      window.speechSynthesis.onvoiceschanged = escolherVozes;
     }
   }
 
+  // #cobrador abre no modo com cobrador; #auto toca a demonstracao sozinha
+  var pedido = location.hash;
+  if (pedido.indexOf('cobrador') !== -1) modoOnibus = 'cobrador';
   recomecar();
-  if (location.hash === '#auto') verFuncionando();
+  if (pedido.indexOf('auto') !== -1) verFuncionando();
 })();
 </script>
 </body>
