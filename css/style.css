@@ -521,3 +521,20 @@ html:not(.js) .pilha-botao { display: none; }
 @media (max-width: 640px) {
   .polaroid--deitada { width: 232px; }
 }
+
+/* ---------- Vídeos de divulgação (Rádio Naoya e FUTRLE BR) ---------- */
+/* o quadro 16:9 reserva o espaço antes do vídeo carregar; se o arquivo falhar, o pôster continua à vista */
+.video-quadro { position: relative; aspect-ratio: 16 / 9; background: var(--tinta); }
+.video-quadro video { display: block; width: 100%; height: 100%; object-fit: cover; }
+.video-barra {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 8px 10px; padding: 10px 14px;
+  background: #ebe8e1; border-top: 1px solid #dcd7cc;
+}
+.video-botao {
+  display: inline-flex; align-items: center; min-height: 44px; padding: 0 18px;
+  border: 2px solid #c9c1b1; border-radius: 999px; background: transparent; color: var(--tinta);
+  font: inherit; font-weight: 600; font-size: .95rem; cursor: pointer;
+}
+.video-botao:hover { border-color: var(--tinta); }
+/* sem JavaScript ou com o vídeo ausente, os botões não teriam o que controlar */
+.video-falhou .video-barra, html:not(.js) .video-barra { display: none; }
