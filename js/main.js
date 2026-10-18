@@ -81,6 +81,72 @@
     if (botaoPilha) botaoPilha.addEventListener('click', proximaFoto);
   }
 
+  // vídeos de divulgação: tocam mudos só enquanto estão na tela; o som só liga no botão
+  Array.prototype.forEach.call(document.querySelectorAll('.video-brag'), function (bloco) {
+    var video = bloco.querySelector('video');
+    var botaoPlay = bloco.querySelector('.video-play');
+    var botaoSom = bloco.querySelector('.video-som');
+    if (!video || !botaoPlay || !botaoSom) return;
+    var nome = bloco.getAttribute('data-nome') || 'vídeo';
+    var naTela = false;
+    var pausadoPeloUsuario = false;
+
+    function tocar() {
+      var p = video.play();
+      if (p && p.catch) p.catch(function () {});
+    }
+    function mostrarPlay(parado) {
+      botaoPlay.textContent = parado ? 'Reproduzir' : 'Pausar';
+      botaoPlay.setAttribute('aria-label', (parado ? 'Reproduzir o ' : 'Pausar o ') + nome);
+    }
+    function mostrarSom() {
+      var comSom = !video.muted;
+      botaoSom.textContent = comSom ? 'Silenciar' : 'Ativar som';
+      botaoSom.setAttribute('aria-pressed', comSom ? 'true' : 'false');
+      botaoSom.setAttribute('aria-label', (comSom ? 'Silenciar o ' : 'Ativar som do ') + nome);
+    }
+    function falhou() { bloco.classList.add('video-falhou'); }
+
+    botaoPlay.addEventListener('click', function () {
+      if (video.paused) {
+        pausadoPeloUsuario = false;
+        tocar();
+      } else {
+        pausadoPeloUsuario = true;
+        video.pause();
+      }
+    });
+    botaoSom.addEventListener('click', function () {
+      video.muted = !video.muted;
+      if (!video.muted && video.paused && naTela) {
+        pausadoPeloUsuario = false;
+        tocar();
+      }
+    });
+    video.addEventListener('play', function () { mostrarPlay(false); });
+    video.addEventListener('pause', function () { mostrarPlay(true); });
+    video.addEventListener('volumechange', mostrarSom);
+    video.addEventListener('error', falhou);
+    var fonte = video.querySelector('source');
+    if (fonte) fonte.addEventListener('error', falhou);
+    if (video.networkState === 3) falhou(); // o arquivo já falhou antes deste script rodar
+    mostrarPlay(menosMovimento || !('IntersectionObserver' in window)); // nesses casos o vídeo começa parado
+    mostrarSom();
+
+    // toca sozinho (sempre mudo) ao entrar na tela e pausa ao sair; com menos movimento, só toca no botão
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (entradas) {
+        entradas.forEach(function (en) {
+          naTela = en.isIntersecting && en.intersectionRatio >= 0.35;
+          if (!naTela) {
+            video.pause();
+            video.muted = true; // ao voltar para a tela ele não retoma com som sozinho
+          } else if (!pausadoPeloUsuario && !menosMovimento) tocar();
+        });
+      }, { threshold: [0, 0.35] }).observe(video);
+    }
+  });
+
   var ano = document.getElementById('ano');
   if (ano) ano.textContent = new Date().getFullYear();
 })();
