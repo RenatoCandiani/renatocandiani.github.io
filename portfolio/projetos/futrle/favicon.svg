@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 300">
+  <defs>
+    <linearGradient id="c" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#20201f"/>
+      <stop offset="1" stop-color="#121212"/>
+    </linearGradient>
+  </defs>
+  <!-- Aro -->
+  <path d="M130 8 L246 46 L246 168 Q246 250 130 292 Q14 250 14 168 L14 46 Z" fill="#c8841a" stroke="#8a5a10" stroke-width="4"/>
+  <!-- Corpo -->
+  <path d="M130 30 L228 62 L228 165 Q228 236 130 272 Q32 236 32 165 L32 62 Z" fill="url(#c)" stroke="#fca311" stroke-width="4"/>
+  <!-- Três estrelas (maiores, pra aparecer em tamanho pequeno) -->
+  <g fill="#fca311">
+    <path d="M95 70 l4 9 10 .8 -7.6 6.4 2.6 9.8 -9-5.4 -9 5.4 2.6-9.8 -7.6-6.4 10-.8z"/>
+    <path d="M130 62 l4.4 10 11 .9 -8.4 7 2.8 10.6 -9.8-5.8 -9.8 5.8 2.8-10.6 -8.4-7 11-.9z"/>
+    <path d="M165 70 l4 9 10 .8 -7.6 6.4 2.6 9.8 -9-5.4 -9 5.4 2.6-9.8 -7.6-6.4 10-.8z"/>
+  </g>
+  <!-- Monograma FBR grande e legível -->
+  <text x="130" y="205" font-family="Georgia, serif" font-size="110" font-weight="700" font-style="italic" fill="#f4f4f4" text-anchor="middle">FBR</text>
+</svg>
