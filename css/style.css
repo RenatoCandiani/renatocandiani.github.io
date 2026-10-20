@@ -344,7 +344,19 @@ ul, ol { margin: 0; padding: 0; }
   margin-bottom: 10px; font-family: var(--fonte-texto); font-size: .8rem; font-weight: 700;
   letter-spacing: .1em; text-transform: uppercase; color: var(--suave);
 }
-.habilidades .stack li { background: var(--branco); border: 1px solid var(--linha); }
+.habilidades .stack li { display: flex; align-items: center; gap: 6px; padding-left: 9px; background: var(--branco); border: 1px solid var(--linha); }
+.habilidades .stack img { flex: none; width: 18px; height: 18px; }
+/* pulinho do ícone ao passar o mouse: só com mouse e para quem não pediu menos movimento */
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .habilidades .stack li:hover img { animation: pulinho .6s; }
+  @keyframes pulinho {
+    0% { transform: translateY(0) scale(1); animation-timing-function: cubic-bezier(.33, 1, .68, 1); }
+    30% { transform: translateY(-4.5px) scale(1.05); animation-timing-function: cubic-bezier(.32, 0, .67, 0); }
+    56% { transform: translateY(0) scale(1); animation-timing-function: cubic-bezier(.33, 1, .68, 1); }
+    72% { transform: translateY(-1.5px) scale(1); animation-timing-function: cubic-bezier(.32, 0, .67, 0); }
+    86%, 100% { transform: translateY(0) scale(1); }
+  }
+}
 
 /* ---------- Trajetória ---------- */
 /* --logo é o tamanho do quadrinho com a logo de cada lugar (fica em cima da linha) */
