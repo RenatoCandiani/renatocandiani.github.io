@@ -124,27 +124,33 @@
           </div>
         </article>
 
-        <article class="destaque destaque-invertido revelar" aria-labelledby="p-robo">
+        <article class="destaque destaque-invertido revelar" aria-labelledby="p-futrle">
           <figure class="destaque-imagem">
-            <div class="janela janela-escura">
-              <img src="img/robo-videos.svg" width="800" height="500" loading="lazy" alt="Esquema do robô: a gravação de horas de uma rádio, o silêncio de quando ela sai do ar e o trecho do encerramento recortado, que vira vídeo MP4, thumbnail e título com descrição.">
+            <div class="janela video-brag" data-nome="vídeo do FUTRLE BR">
+              <div class="video-quadro">
+                <video muted loop playsinline preload="metadata" width="1280" height="720" poster="img/futrle-brag.jpg" aria-label="Vídeo de 22 segundos, com música e sem narração, que mostra o jogo FUTRLE BR: o escudo borrado ficando nítido a cada erro, a grade de dicas e o resultado para colar no grupo.">
+                  <source src="video/futrle.mp4" type="video/mp4">
+                </video>
+              </div>
+              <div class="video-barra">
+                <button class="video-botao video-play" type="button">Pausar</button>
+                <button class="video-botao video-som" type="button" aria-pressed="false">Ativar som</button>
+              </div>
             </div>
           </figure>
           <div class="destaque-texto">
-            <ul class="areas" aria-label="Áreas"><li class="area area-auto">Automação</li><li class="area area-dados">Dados</li></ul>
-            <h3 id="p-robo">Robô do canal Arquivos Renato</h3>
-            <p class="destaque-sub">Automação em Python que monta os vídeos sozinha</p>
-            <p>Meu canal no YouTube registra aberturas e encerramentos de rádios do Brasil. Antes eu editava cada vídeo à mão no CapCut. Hoje um robô acha o encerramento numa gravação de horas, recorta o trecho e entrega o vídeo pronto.</p>
+            <ul class="areas" aria-label="Áreas"><li class="area area-dev">Desenvolvimento</li><li class="area area-produto">Produto</li></ul>
+            <h3 id="p-futrle">FUTRLE BR</h3>
+            <p class="destaque-sub">Jogo diário: adivinhe o clube pelo escudo borrado</p>
+            <p>Jogo no estilo Wordle para quem gosta de futebol brasileiro. A cada erro o escudo fica mais nítido e aparecem dicas de estado, região, fundação e cores.</p>
             <ul class="pontos">
-              <li>Acha o encerramento pelo silêncio de quando a rádio sai do ar</li>
-              <li>Puxa a cor do fundo da logo da rádio e trata o áudio</li>
-              <li>Gera vídeo, thumbnail, título e descrição, um ou vários de uma vez</li>
-              <li>Junto dele: um script que transforma meus favoritos numa planilha de rádios e um painel das gravações</li>
+              <li>Mais de 500 clubes, da Série A à segundona dos estaduais</li>
+              <li>Modos de 1, 2 e 4 escudos e um desafio numerado por dia</li>
+              <li>Mostra como a galera foi no dia e dá para instalar no celular</li>
             </ul>
-            <ul class="stack" aria-label="Tecnologias"><li>Python</li><li>ffmpeg</li><li>Pillow</li><li>Pandas</li><li>React</li></ul>
+            <ul class="stack" aria-label="Tecnologias"><li>React</li><li>Vite</li><li>Cloudflare</li></ul>
             <div class="links">
-              <a class="botao botao-primario" href="https://www.youtube.com/@ArquivosRenato" target="_blank" rel="noopener noreferrer">Ver o canal<span class="sr-only"> (abre em nova aba)</span></a>
-              <a class="botao botao-claro" href="https://github.com/RenatoCandiani/radio-favoritos" target="_blank" rel="noopener noreferrer">Código da planilha de rádios<span class="sr-only"> (abre em nova aba)</span></a>
+              <a class="botao botao-primario" href="https://futrle.pages.dev/" target="_blank" rel="noopener noreferrer">Jogar FUTRLE BR<span class="sr-only"> (abre em nova aba)</span></a>
             </div>
           </div>
         </article>
@@ -175,26 +181,6 @@
 
         <h3 class="subtitulo revelar">Mais projetos</h3>
         <ul class="cards">
-          <li class="card revelar">
-            <div class="video-brag" data-nome="vídeo do FUTRLE BR">
-              <div class="video-quadro">
-                <video muted loop playsinline preload="metadata" width="1280" height="720" poster="img/futrle-brag.jpg" aria-label="Vídeo de 22 segundos, com música e sem narração, que mostra o jogo FUTRLE BR: o escudo borrado ficando nítido a cada erro, a grade de dicas e o resultado para colar no grupo.">
-                  <source src="video/futrle.mp4" type="video/mp4">
-                </video>
-              </div>
-              <div class="video-barra">
-                <button class="video-botao video-play" type="button">Pausar</button>
-                <button class="video-botao video-som" type="button" aria-pressed="false">Ativar som</button>
-              </div>
-            </div>
-            <div class="card-corpo">
-              <ul class="areas" aria-label="Áreas"><li class="area area-dev">Desenvolvimento</li></ul>
-              <h4>FUTRLE BR</h4>
-              <p>Jogo diário no estilo Wordle: adivinhe o clube brasileiro pelo escudo borrado. A cada erro o escudo fica mais nítido e aparecem dicas de estado, região, fundação e cores.</p>
-              <ul class="stack" aria-label="Tecnologias"><li>React</li><li>Vite</li><li>Cloudflare</li></ul>
-              <div class="card-links"><a class="card-link" href="https://futrle.pages.dev/" target="_blank" rel="noopener">Jogar FUTRLE BR<span class="sr-only"> (abre em nova aba)</span></a></div>
-            </div>
-          </li>
           <li class="card revelar">
             <div class="card-imagem"><img src="img/metrosp.jpg" width="1200" height="750" loading="lazy" alt="MetrôSP Quiz: mapa da rede de metrô e trem de São Paulo com 15 estações reveladas e o placar de acertos por linha."></div>
             <div class="card-corpo">
